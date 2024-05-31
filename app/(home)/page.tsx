@@ -2,13 +2,27 @@
 import { useTheme } from "next-themes";
 import { Button } from "../components/ui/button";
 import useCreateSupplierModal from "@/hooks/useCreateSupplierModal";
+import SuppliersList from "../components/SuppliersList";
+import useFetchSuppliers from "@/hooks/useFetchSuppliers";
+import { BounceLoader } from "react-spinners";
+import { useEffect } from "react";
+import useCreateSupplier from "@/hooks/useCreateSupplier";
 
 export default function Home() {
   const { theme } = useTheme();
   const createSupplierModal = useCreateSupplierModal();
+  const { data, error, loading, setLoading } = useFetchSuppliers();
+
+  useEffect(() => {
+    setLoading(true);
+
+    setTimeout(() => {
+      setLoading(false);
+    }, 1000);
+  }, [data]);
 
   return (
-    <div className=" w-full p-2 mt-4 max-h-full">
+    <div className=" w-full flex flex-col p-2 mt-4 max-h-full">
       <div className="flex items-center justify-between">
         <h1
           className={`font-bold text-2xl  ${
@@ -31,6 +45,11 @@ export default function Home() {
           Adicionar Fornecedor
         </Button>
       </div>
+      {loading ? (
+        <BounceLoader className="m-auto" color="#4338ca" />
+      ) : (
+        <SuppliersList suppliers={data} />
+      )}
     </div>
   );
 }

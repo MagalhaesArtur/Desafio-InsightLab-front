@@ -1,4 +1,5 @@
 import * as Dialog from "@radix-ui/react-dialog";
+import { useTheme } from "next-themes";
 import { IoMdClose } from "react-icons/io";
 
 interface ModalProps {
@@ -16,6 +17,8 @@ const Modal: React.FC<ModalProps> = ({
   onChange,
   title,
 }) => {
+  const { theme } = useTheme();
+
   return (
     <Dialog.Root open={isOpen} defaultOpen={isOpen} onOpenChange={onChange}>
       <Dialog.Portal>
@@ -27,7 +30,7 @@ const Modal: React.FC<ModalProps> = ({
           "
         />
         <Dialog.Content
-          className="
+          className={`
           fixed
           drop-shadow-md
           border
@@ -44,10 +47,10 @@ const Modal: React.FC<ModalProps> = ({
           translate-x-[-50%]
           translate-y-[-50%]
           rounded-md
-          bg-neutral-800
+  
           p-[25px]
           focus:outline-none
-          "
+          ${theme == "light" ? "bg-white" : "bg-neutral-800"}`}
         >
           <Dialog.Title
             className="
@@ -72,24 +75,31 @@ const Modal: React.FC<ModalProps> = ({
           <div>{children}</div>
           <Dialog.Close asChild>
             <button
-              className="
-              text-neutral-400            
-              hover:text-white
+              className={`
+              
               absolute
-              top-[10px]
-              right-[10px]
+              top-[15px]
+              right-[15px]
               transition
-              h-[25px]
-              w-[25px]
+            
               appearance-none
               items-center
               justify-center
               rounded-full
               focus:outline-none
-  
-              "
+                        
+              text-neutral-400            
+              ${
+                theme == "light"
+                  ? "text-neutral-700 hover:text-red-600"
+                  : " text-neutral-400 hover:text-red-600"
+              }
+              `}
             >
-              <IoMdClose />
+              <IoMdClose
+                className="  h-[25px]
+              w-[25px]"
+              />
             </button>
           </Dialog.Close>
         </Dialog.Content>

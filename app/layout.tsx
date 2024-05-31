@@ -30,9 +30,9 @@ export default function RootLayout({
           enableSystem
           storageKey="insight"
         >
+          <ModalProvider />
           <Sidebar>{children}</Sidebar>
         </ThemeProvider>
-        <ModalProvider />
       </body>
     </html>
   );

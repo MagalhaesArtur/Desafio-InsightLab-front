@@ -1,11 +1,11 @@
 "use client";
 
-import { useContext, createContext, useState } from "react";
+import { useContext, createContext, useState, useEffect } from "react";
 import { BsArrowBarRight, BsArrowBarLeft } from "react-icons/bs";
 import { IoMdHome } from "react-icons/io";
-import { ModeToggle } from "./toggle-theme";
 import { Button } from "./ui/button";
 import { useTheme } from "next-themes";
+import { BounceLoader } from "react-spinners";
 
 const SidebarContext = createContext<any>(undefined);
 
@@ -18,71 +18,90 @@ interface SidebarItemsProps {
 
 export default function Sidebar({ children }: { children: React.ReactNode }) {
   const [expanded, setExpanded] = useState(false);
+  const [theme1, setTheme] = useState<string | undefined>(undefined);
   const { theme } = useTheme();
-  console.log(theme);
 
-  return (
-    <main className="flex w-screen h-screen">
-      <aside className=" h-screen">
-        <nav
-          className={`h-full inline-flex flex-col  border-r shadow-sm
-        ${theme == "light" ? "bg-white" : "bg-[#121212]"}`}
-        >
-          <div className="p-4 pb-2 flex justify-between items-center">
-            <img
-              src="https://img.logoipsum.com/243.svg"
-              className={`overflow-hidden transition-all ${
-                expanded ? "w-32" : "w-0"
-              }`}
-              alt=""
-            />
-            <Button
-              onClick={() => setExpanded((curr) => !curr)}
-              className={`p-1.5 rounded-lg bg-transparent  ${
-                theme == "light"
-                  ? "text-gray-900 hover:bg-gray-300"
-                  : "text-white hover:bg-gray-700"
-              }`}
-            >
-              {expanded ? (
-                <BsArrowBarLeft size={22} />
-              ) : (
-                <BsArrowBarRight size={22} />
-              )}
-            </Button>
-          </div>
+  useEffect(() => {
+    setTheme(theme);
+  }, [theme]);
 
-          <SidebarContext.Provider value={{ expanded }}>
-            <ul className="flex-1 px-3 ">
-              <SidebarItem icon={<IoMdHome />} text="Home" active />
-            </ul>
-          </SidebarContext.Provider>
-
-          <div className="border-t flex p-3">
-            <img
-              src="https://ui-avatars.com/api/?background=c7d2fe&color=3730a3&bold=true"
-              alt=""
-              className="w-10 h-10 rounded-md"
-            />
-            <div
-              className={`
-              flex justify-between items-center
-              overflow-hidden transition-all ${expanded ? "w-52 ml-3" : "w-0"}
-          `}
-            >
-              <div className="leading-4">
-                <h4 className="font-semibold">John Doe</h4>
-                <span className="text-xs text-gray-600">johndoe@gmail.com</span>
-              </div>
-              <BsArrowBarLeft size={20} />
+  if (theme1 != undefined) {
+    return (
+      <main className="flex w-screen h-screen">
+        <aside className=" h-screen">
+          <nav
+            className={`h-full inline-flex flex-col  border-r shadow-sm
+  ${
+    theme == "light"
+      ? "bg-white"
+      : theme == "dark"
+      ? "bg-[#121212]"
+      : "bg-red-400"
+  } `}
+          >
+            <div className="p-4 pb-2 flex justify-between items-center">
+              <img
+                src="https://img.logoipsum.com/243.svg"
+                className={`overflow-hidden transition-all ${
+                  expanded ? "w-32" : "w-0"
+                }`}
+                alt=""
+              />
+              <Button
+                onClick={() => setExpanded((curr) => !curr)}
+                className={`p-2 rounded-lg bg-transparent  ${
+                  theme == "light"
+                    ? "text-gray-900 hover:bg-gray-300"
+                    : "text-white hover:bg-gray-700"
+                }`}
+              >
+                {expanded ? (
+                  <BsArrowBarLeft size={22} />
+                ) : (
+                  <BsArrowBarRight size={22} />
+                )}
+              </Button>
             </div>
-          </div>
-        </nav>
-      </aside>
 
-      {children}
-    </main>
-  );
+            <SidebarContext.Provider value={{ expanded }}>
+              <ul className="flex-1 px-3 ">
+                <SidebarItem icon={<IoMdHome />} text="Home" active />
+              </ul>
+            </SidebarContext.Provider>
+
+            <div className="border-t flex p-3">
+              <img
+                src="https://ui-avatars.com/api/?background=c7d2fe&color=3730a3&bold=true"
+                alt=""
+                className="w-10 h-10 rounded-md"
+              />
+              <div
+                className={`
+        flex justify-between items-center
+        overflow-hidden transition-all ${expanded ? "w-52 ml-3" : "w-0"}
+    `}
+              >
+                <div className="leading-4">
+                  <h4 className="font-semibold">John Doe</h4>
+                  <span className="text-xs text-gray-600">
+                    johndoe@gmail.com
+                  </span>
+                </div>
+                <BsArrowBarLeft size={20} />
+              </div>
+            </div>
+          </nav>
+        </aside>
+        {children}
+      </main>
+    );
+  } else {
+    return (
+      <main className="flex w-full h-full items-center justify-center">
+        <BounceLoader color="#6366F1" />
+      </main>
+    );
+  }
 }
 
 export function SidebarItem({ icon, text, active, alert }: SidebarItemsProps) {

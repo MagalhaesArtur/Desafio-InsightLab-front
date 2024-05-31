@@ -81,3 +81,18 @@ body,
     @apply bg-background text-foreground;
   }
 }
+
+th,
+td {
+  padding: 12px;
+  border-bottom: 1px solid #636161;
+  text-align: left;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+tr:last-child > td {
+  border-bottom: 0px;
+}

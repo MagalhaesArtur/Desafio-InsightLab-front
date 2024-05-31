@@ -23,7 +23,7 @@ const useFetchSuppliers = () => {
     getUsers();
   }, []);
 
-  return { data, error, loading };
+  return { data, error, loading, setLoading };
 };
 
 export default useFetchSuppliers;

@@ -19,7 +19,7 @@ const useCreateSupplier = () => {
     }
   };
 
-  return { data, error, loading, handleCreateUser };
+  return { data, error, loading, handleCreateUser, setLoading };
 };
 
 export default useCreateSupplier;
