@@ -1,6 +1,8 @@
 "use client";
 
 import CreateSupplier from "@/app/components/modals/CreateSupplier";
+import DeleteSupplier from "@/app/components/modals/DeleteSupplier";
+import EditSupplier from "@/app/components/modals/EditSupplier";
 
 import { useEffect, useState } from "react";
 
@@ -20,6 +22,8 @@ const ModalProvider: React.FC<ModalProviderProps> = ({}) => {
   return (
     <>
       <CreateSupplier />
+      <DeleteSupplier />
+      <EditSupplier />
     </>
   );
 };

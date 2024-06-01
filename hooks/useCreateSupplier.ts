@@ -7,7 +7,7 @@ const useCreateSupplier = () => {
   const [error, setError] = useState<Error | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
 
-  const handleCreateUser = async (userData: Supplier) => {
+  const handleCreateSupplier = async (userData: Supplier) => {
     setLoading(true);
     try {
       const newUser = await createSupplier(userData);
@@ -19,7 +19,7 @@ const useCreateSupplier = () => {
     }
   };
 
-  return { data, error, loading, handleCreateUser, setLoading };
+  return { data, error, loading, handleCreateSupplier, setLoading };
 };
 
 export default useCreateSupplier;

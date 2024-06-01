@@ -7,15 +7,18 @@ import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import useCreateSupplier from "@/hooks/useCreateSupplier";
 import { SyncLoader } from "react-spinners";
 import { useTheme } from "next-themes";
-import { Island_Moments } from "next/font/google";
 import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
+import { useAppContext } from "@/context";
 
 const CreateSupplier = () => {
   const { theme } = useTheme();
   const [isLoading, setIsLoading] = useState(false);
+  const { refresh } = useRouter();
+  const { setOnCreateSupplier, onCreateSupplier } = useAppContext();
 
   const createSupplierModal = useCreateSupplierModal();
-  const { data, error, loading, handleCreateUser } = useCreateSupplier();
+  const { data, error, loading, handleCreateSupplier } = useCreateSupplier();
   const onChange = (open: boolean) => {
     if (!open) {
       createSupplierModal.onClose();
@@ -35,10 +38,12 @@ const CreateSupplier = () => {
     const { email, name, document } = values;
 
     setTimeout(() => {
-      handleCreateUser({ email, name, document });
+      handleCreateSupplier({ email, name, document });
       setIsLoading(false);
       toast.success("Fornecedor cadastrado!");
       reset();
+      refresh();
+      setOnCreateSupplier(!onCreateSupplier);
       createSupplierModal.onClose();
     }, 1000);
   };
