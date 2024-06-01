@@ -6,6 +6,7 @@ import { ThemeProvider } from "./components/providers/theme-provider";
 import { cn } from "@/lib/utils";
 import ToasterProvider from "@/providers/ToasterProvider";
 import ModalProvider from "@/providers/ModalProvider";
+import { AppWrapper } from "@/context";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,17 +23,19 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={cn(inter.className, "bg-white dark:bg-[#121212]")}>
-        <ToasterProvider />
+        <AppWrapper>
+          <ToasterProvider />
 
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="light"
-          enableSystem
-          storageKey="insight"
-        >
-          <ModalProvider />
-          <Sidebar>{children}</Sidebar>
-        </ThemeProvider>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="light"
+            enableSystem
+            storageKey="insight"
+          >
+            <ModalProvider />
+            <Sidebar>{children}</Sidebar>
+          </ThemeProvider>
+        </AppWrapper>
       </body>
     </html>
   );
