@@ -12,10 +12,9 @@ import { fetchSuppliers } from "@/lib/api/suppliers";
 import { useAppContext } from "@/context";
 
 export default function Home() {
-  const [data1, setData] = useState<Supplier[] | null>(null);
+  const [data1, setData] = useState<Supplier[] | null | undefined>(undefined);
   const { onCreateSupplier, onDeleteSupplier, onEditSupplier } =
     useAppContext();
-
   const { theme } = useTheme();
 
   const createSupplierModal = useCreateSupplierModal();
@@ -59,11 +58,15 @@ export default function Home() {
           Adicionar Fornecedor
         </Button>
       </div>
-      {loading ? (
-        <BounceLoader className="m-auto" color="#4338ca" />
-      ) : (
-        <SuppliersList suppliers={data1} />
-      )}
+      {data1 ? (
+        !(data1.length > 0) ? (
+          <div className="mt-4 text-xl">Sem fornecedores cadastrados!</div>
+        ) : loading ? (
+          <BounceLoader className="m-auto" color="#4338ca" />
+        ) : (
+          <SuppliersList suppliers={data1} />
+        )
+      ) : null}
     </div>
   );
 }

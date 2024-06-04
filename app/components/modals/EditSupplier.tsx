@@ -10,7 +10,7 @@ import { useRouter } from "next/navigation";
 import { useAppContext } from "@/context";
 import useEditSupplier from "@/hooks/useEditSupplier";
 import useEditSupplierModal from "@/hooks/useEditSupplierModal";
-import { Supplier } from "@/types";
+import InputMask from "react-input-mask";
 
 const EditSupplier = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -19,7 +19,7 @@ const EditSupplier = () => {
   const { refresh } = useRouter();
   const { currentSupplier } = useAppContext();
   const editSupplierModal = useEditSupplierModal();
-  const { data, error, loading, handleEditSupplier } = useEditSupplier();
+  const { loading, handleEditSupplier } = useEditSupplier();
   const onChange = (open: boolean) => {
     if (!open) {
       editSupplierModal.onClose();
@@ -45,22 +45,31 @@ const EditSupplier = () => {
   const onSubmit: SubmitHandler<FieldValues> = async (values) => {
     setIsLoading(true);
     const { email, name, document } = values;
-
-    setTimeout(() => {
-      const x = {
-        id: currentSupplier.id,
-        email: email,
-        name: name,
-        document: document,
-      };
-      handleEditSupplier(x);
+    if (document.replace(/\D/g, "").length === 14) {
+      setTimeout(async () => {
+        const supplierData = {
+          id: currentSupplier.id,
+          email: email,
+          name: name,
+          document: document,
+        };
+        try {
+          await handleEditSupplier(supplierData);
+          setIsLoading(false);
+          toast.success("Fornecedor editado!");
+          reset();
+          refresh();
+          setOnEditSupplier(!onEditSupplier);
+          editSupplierModal.onClose();
+        } catch (error) {
+          toast.error("Fornecedor com esses dados já existe!");
+          setIsLoading(false);
+        }
+      }, 1000);
+    } else {
+      toast.error("CNPJ incompleto!");
       setIsLoading(false);
-      toast.success("Fornecedor editado!");
-      reset();
-      refresh();
-      setOnEditSupplier(!onEditSupplier);
-      editSupplierModal.onClose();
-    }, 1000);
+    }
   };
   return (
     <Modal
@@ -98,15 +107,29 @@ const EditSupplier = () => {
           {...register("email", { required: true })}
           placeholder="Digite o email do fornecedor..."
         />{" "}
-        <Input
-          type="number"
-          className={`  ${
+        <InputMask
+          className={` flex
+          w-full
+          rounded-md
+          border
+          border-transparent
+          px-3
+          py-3
+          text-sm
+          file:border-0
+          file:bg-transparent
+          file:text-sm
+          file:font-medium
+          disabled:cursor-not-allowed
+          disabled:opacity-50
+          focus:outline-none ${
             theme == "light"
               ? "bg-indigo-200 placeholder:text-neutral-700 hover:bg-indigo-300 transition-all"
               : "!bg-indigo-400  placeholder:text-black transition-all hover:bg-indigo-500"
           }`}
           autoComplete="off"
           id="document"
+          mask="99.999.999/9999-99"
           disabled={loading}
           {...register("document", { required: true })}
           placeholder="Digite o CNPJ do fornecedor..."

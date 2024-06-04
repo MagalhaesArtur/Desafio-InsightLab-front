@@ -37,23 +37,27 @@ const CreateSupplier = () => {
   const onSubmit: SubmitHandler<FieldValues> = async (values) => {
     setIsLoading(true);
     const { email, name, document } = values;
-
-    setTimeout(async () => {
-      try {
-        await handleCreateSupplier({ email, name, document });
-        setIsLoading(false);
-        toast.success("Fornecedor cadastrado!");
-        reset();
-        refresh();
-        setOnCreateSupplier(!onCreateSupplier);
-        createSupplierModal.onClose();
-      } catch (e) {
-        console.log(e);
-        const x = e as Error;
-        toast.error(x.message);
-        setIsLoading(false);
-      }
-    }, 1000);
+    if (document.replace(/\D/g, "").length === 14) {
+      setTimeout(async () => {
+        try {
+          await handleCreateSupplier({ email, name, document });
+          setIsLoading(false);
+          toast.success("Fornecedor cadastrado!");
+          reset();
+          refresh();
+          setOnCreateSupplier(!onCreateSupplier);
+          createSupplierModal.onClose();
+        } catch (e) {
+          console.log(e);
+          const x = e as Error;
+          toast.error(x.message);
+          setIsLoading(false);
+        }
+      }, 1000);
+    } else {
+      toast.error("CNPJ incompleto!");
+      setIsLoading(false);
+    }
   };
 
   return (

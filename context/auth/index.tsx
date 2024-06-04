@@ -28,31 +28,37 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
 
   const router = useRouter();
+  const loadingStoreData = async () => {
+    const storageToken = localStorage.getItem("@Auth:token");
+    if (storageToken) {
+      const res = await Auth(storageToken);
+
+      if (res.username == null || res.status == 500) {
+        toast.error("Sessão Expirada! Faça o login novamente.");
+        localStorage.removeItem("@Auth:token");
+
+        setIsAuthenticated(false);
+        router.push("/");
+      } else {
+        setUser(res);
+
+        setIsAuthenticated(true);
+      }
+    }
+  };
+  useEffect(() => {
+    loadingStoreData();
+  }, []);
 
   useEffect(() => {
-    const loadingStoreData = async () => {
-      const storageToken = localStorage.getItem("@Auth:token");
-
-      if (storageToken) {
-        const res = await Auth(storageToken);
-
-        if (res.username == null || res.status == 500) {
-          toast.error("Sessão Expirada! Faça o login novamente.");
-          localStorage.clear();
-          setIsAuthenticated(false);
-          router.push("/");
-        } else {
-          setUser(res);
-          setIsAuthenticated(true);
-        }
-      }
-    };
     loadingStoreData();
-  }, [AuthContext, router]);
+  }, [AuthContext, isAuthenticated]);
 
   const logout = () => {
-    localStorage.removeItem("@Auth:token");
     setIsAuthenticated(false);
+    localStorage.removeItem("@Auth:token");
+
+    setUser(null);
     router.replace("/");
   };
 

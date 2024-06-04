@@ -1,7 +1,7 @@
 export interface Supplier {
   id?: string;
   name: string;
-  document: String;
+  document: string;
   email: string;
 }
 

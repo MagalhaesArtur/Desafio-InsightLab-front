@@ -1,12 +1,20 @@
 import { AxiosResponse } from "axios";
 import api from "./api";
+import toast from "react-hot-toast";
+import { useAuth } from "@/context/auth";
+import { useRouter } from "next/navigation";
 
 export const Auth = async (token: string) => {
   if (token != null) {
-    const response = await api.post("/auth/validateToken", {
-      token: token,
-    });
-    return response.data;
+    try {
+      const response = await api.post("/auth/validateToken", {
+        token: token,
+      });
+      return response.data;
+    } catch (e) {
+      toast.error("Erro no login, tente novamente");
+      localStorage.clear();
+    }
   } else {
     localStorage.clear();
   }

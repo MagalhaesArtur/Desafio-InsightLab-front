@@ -13,7 +13,8 @@ const useEditSupplier = () => {
       const newUser = await editSupplier(userData);
       setData(newUser);
     } catch (error) {
-      setError(error as Error);
+      const x = error as Error;
+      throw new Error(x.message);
     } finally {
       setLoading(false);
     }

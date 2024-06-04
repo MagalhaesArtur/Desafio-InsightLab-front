@@ -23,17 +23,17 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={cn(inter.className, "bg-white dark:bg-[#121212]")}>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="dark"
-          enableSystem
-          storageKey="insight"
-        >
-          <AuthProvider>
+        <AuthProvider>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="dark"
+            enableSystem
+            storageKey="insight"
+          >
             <ToasterProvider />
             {children}
-          </AuthProvider>
-        </ThemeProvider>
+          </ThemeProvider>
+        </AuthProvider>
       </body>
     </html>
   );

@@ -25,11 +25,9 @@ export default function Sidebar({ children }: { children: React.ReactNode }) {
   const [theme1, setTheme] = useState<string | undefined>(undefined);
   const { theme } = useTheme();
   const { logout, user, setUser } = useAuth();
-
   useEffect(() => {
     setTheme(theme);
-    setUser(user);
-  }, [theme, user]);
+  }, [theme]);
 
   if (theme1 != undefined) {
     return (

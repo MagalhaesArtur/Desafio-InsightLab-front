@@ -7,6 +7,7 @@ import toast from "react-hot-toast";
 import { useAppContext } from "@/context";
 import { Button } from "../ui/button";
 import { useTheme } from "next-themes";
+import { SyncLoader } from "react-spinners";
 
 const DeleteSupplier = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -56,7 +57,11 @@ const DeleteSupplier = () => {
           disabled={loading || isLoading}
           type="submit"
         >
-          Deletar
+          {loading || isLoading ? (
+            <SyncLoader size={8} color="#36d7b7" />
+          ) : (
+            "Deletar"
+          )}
         </Button>
       </form>
     </Modal>

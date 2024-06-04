@@ -3,7 +3,7 @@ import SupplierItem from "./SupplierItem";
 import { useTheme } from "next-themes";
 
 interface SuppliersListProps {
-  suppliers: Supplier[] | null;
+  suppliers: Supplier[] | null | undefined;
 }
 
 const SuppliersList = ({ suppliers }: SuppliersListProps) => {

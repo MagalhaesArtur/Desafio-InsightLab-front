@@ -8,7 +8,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className="w-full overflow-x-scroll max-h-screen p-2">
+    <div className="w-full overflow-x-auto max-h-screen p-2">
       <div className="flex w-full justify-end">
         <div className="flex justify-center items-center">
           <ModeToggle />

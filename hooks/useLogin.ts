@@ -7,10 +7,11 @@ const useLogin = () => {
   const [error, setError] = useState<Error | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
 
-  const handleLogin = async (username: string, password: string) => {
+  const handleLogin = async (email: string, password: string) => {
     setLoading(true);
     try {
-      const token1 = await api.post("/auth/login", { username, password });
+      console.log(password, email);
+      const token1 = await api.post("/auth/login", { password, email });
 
       localStorage.setItem("@Auth:token", token1.data.token);
       setToken(token1.data.token);

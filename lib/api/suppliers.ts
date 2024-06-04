@@ -33,8 +33,18 @@ export const createSupplier = async (userData: Supplier): Promise<Supplier> => {
 };
 
 export const editSupplier = async (userData: Supplier): Promise<Supplier> => {
-  const response = await api.put("/suppliers", userData);
-  return response.data;
+  const token = localStorage.getItem("@Auth:token");
+
+  try {
+    const response = await api.put("/suppliers", userData, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data;
+  } catch (e: any) {
+    throw new Error(e.response.data.message);
+  }
 };
 
 export const deleteSupplier = async (id: string): Promise<Supplier> => {
