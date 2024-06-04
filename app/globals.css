@@ -96,3 +96,15 @@ table {
 tr:last-child > td {
   border-bottom: 0px;
 }
+
+/* Para Chrome, Safari e Edge */
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 30px white inset !important;
+  -webkit-text-fill-color: black !important;
+}
+
+/* Para Firefox */
+input:-moz-autofill {
+  box-shadow: 0 0 0 30px white inset !important;
+  -moz-text-fill-color: black !important;
+}

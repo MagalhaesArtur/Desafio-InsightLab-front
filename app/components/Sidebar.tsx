@@ -5,7 +5,10 @@ import { BsArrowBarRight, BsArrowBarLeft } from "react-icons/bs";
 import { IoMdHome } from "react-icons/io";
 import { Button } from "./ui/button";
 import { useTheme } from "next-themes";
-import { BounceLoader } from "react-spinners";
+import { BounceLoader, HashLoader } from "react-spinners";
+import { useAuth } from "@/context/auth";
+import toast from "react-hot-toast";
+import { CiLogout } from "react-icons/ci";
 
 const SidebarContext = createContext<any>(undefined);
 
@@ -18,32 +21,33 @@ interface SidebarItemsProps {
 
 export default function Sidebar({ children }: { children: React.ReactNode }) {
   const [expanded, setExpanded] = useState(false);
+  const [isLogoutLoading, setIsLogoutLoading] = useState(false);
   const [theme1, setTheme] = useState<string | undefined>(undefined);
   const { theme } = useTheme();
+  const { logout, user, setUser } = useAuth();
 
   useEffect(() => {
     setTheme(theme);
-  }, [theme]);
+    setUser(user);
+  }, [theme, user]);
 
   if (theme1 != undefined) {
     return (
       <main className="flex w-screen h-screen">
-        <aside className=" h-screen">
+        <aside className=" h-full">
           <nav
             className={`h-full inline-flex flex-col  border-r shadow-sm
-  ${
-    theme == "light"
-      ? "bg-white"
-      : theme == "dark"
-      ? "bg-[#121212]"
-      : "bg-red-400"
-  } `}
+  ${theme == "light" ? "bg-white" : theme == "dark" ? "bg-[#121212]" : ""} `}
           >
-            <div className="p-4 pb-2 flex justify-between items-center">
+            <div className={`p-4 pb-2 flex justify-between items-center `}>
               <img
-                src="https://img.logoipsum.com/243.svg"
+                src="https://www.insightlab.ufc.br/wp-content/webp-express/webp-images/doc-root/wp-content/uploads/2020/02/LogoInsight.png.webp"
                 className={`overflow-hidden transition-all ${
-                  expanded ? "w-32" : "w-0"
+                  expanded
+                    ? `w-32 ${
+                        theme == "light" ? "bg-indigo-500 rounded-lg p-2" : ""
+                      }`
+                    : "w-0"
                 }`}
                 alt=""
               />
@@ -70,11 +74,10 @@ export default function Sidebar({ children }: { children: React.ReactNode }) {
             </SidebarContext.Provider>
 
             <div className="border-t flex p-3">
-              <img
-                src="https://ui-avatars.com/api/?background=c7d2fe&color=3730a3&bold=true"
-                alt=""
-                className="w-10 h-10 rounded-md"
-              />
+              <div className="bg-indigo-300 font-bold flex items-center justify-center min-w-[40px] p-2 text-black rounded-lg">
+                {user?.username.substr(0, 1).toLocaleUpperCase()}
+              </div>
+
               <div
                 className={`
         flex justify-between items-center
@@ -82,12 +85,37 @@ export default function Sidebar({ children }: { children: React.ReactNode }) {
     `}
               >
                 <div className="leading-4">
-                  <h4 className="font-semibold">John Doe</h4>
-                  <span className="text-xs text-gray-600">
-                    johndoe@gmail.com
+                  <h4 className="font-semibold">{user?.username}</h4>
+                  <span
+                    className={`text-xs text-gray-600 ${
+                      theme == "dark" ? "!text-gray-200" : "text-black"
+                    }`}
+                  >
+                    {user?.email}
                   </span>
                 </div>
-                <BsArrowBarLeft size={20} />
+                <Button
+                  className={`p-2 rounded-lg bg-transparent  ${
+                    theme == "light"
+                      ? "text-gray-900 hover:bg-gray-300"
+                      : "text-white hover:bg-gray-700"
+                  }`}
+                  onClick={() => {
+                    setIsLogoutLoading(true);
+                    setTimeout(() => {
+                      logout();
+
+                      setIsLogoutLoading(false);
+                      toast.success("Logout efetuado com sucesso!");
+                    }, 1000);
+                  }}
+                >
+                  {isLogoutLoading ? (
+                    <HashLoader size={25} color="#36d7b7" />
+                  ) : (
+                    <CiLogout title="Logout" size={25} />
+                  )}
+                </Button>
               </div>
             </div>
           </nav>

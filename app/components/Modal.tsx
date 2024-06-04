@@ -23,7 +23,7 @@ const Modal: React.FC<ModalProps> = ({
     <Dialog.Root open={isOpen} defaultOpen={isOpen} onOpenChange={onChange}>
       <Dialog.Portal>
         <Dialog.Overlay
-          className="bg-neutral-900/90
+          className="bg-neutral-90
           backdrop-blur-sm
           fixed
           inset-0
@@ -32,7 +32,6 @@ const Modal: React.FC<ModalProps> = ({
         <Dialog.Content
           className={`
           fixed
-          drop-shadow-md
           border
           border-indigo-400
           top-[50%]

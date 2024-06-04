@@ -1,8 +1,8 @@
 "use client";
 import { useTheme } from "next-themes";
-import { Button } from "../components/ui/button";
+import { Button } from "../../components/ui/button";
 import useCreateSupplierModal from "@/hooks/useCreateSupplierModal";
-import SuppliersList from "../components/SuppliersList";
+import SuppliersList from "../../components/SuppliersList";
 import useFetchSuppliers from "@/hooks/useFetchSuppliers";
 import { BounceLoader } from "react-spinners";
 import { useEffect, useState } from "react";
@@ -24,7 +24,6 @@ export default function Home() {
   const aux = async () => {
     const supp = await fetchSuppliers();
     setData(supp);
-    console.log(supp);
   };
 
   useEffect(() => {
@@ -37,10 +36,10 @@ export default function Home() {
   }, [data, onCreateSupplier, onDeleteSupplier, onEditSupplier]);
 
   return (
-    <div className=" w-full flex flex-col p-2 mt-4 max-h-full">
+    <div className="  w-full max-h-screen flex flex-col p-2 mt-4 ">
       <div className="flex items-center justify-between">
         <h1
-          className={`font-bold text-2xl  ${
+          className={`font-bold text-base pq:text-2xl  ${
             theme == "light" ? "text-indigo-800" : "!text-indigo-500 "
           }`}
         >

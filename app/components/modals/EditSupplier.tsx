@@ -74,6 +74,7 @@ const EditSupplier = () => {
         onSubmit={handleSubmit(onSubmit)}
       >
         <Input
+          type="text"
           id="name"
           className={`  ${
             theme == "light"
@@ -86,6 +87,7 @@ const EditSupplier = () => {
           placeholder="Digite o nome do fornecedor..."
         />
         <Input
+          type="email"
           className={`  ${
             theme == "light"
               ? "bg-indigo-200 placeholder:text-neutral-700 hover:bg-indigo-300 transition-all"
@@ -97,6 +99,7 @@ const EditSupplier = () => {
           placeholder="Digite o email do fornecedor..."
         />{" "}
         <Input
+          type="number"
           className={`  ${
             theme == "light"
               ? "bg-indigo-200 placeholder:text-neutral-700 hover:bg-indigo-300 transition-all"

@@ -11,9 +11,12 @@ const useCreateSupplier = () => {
     setLoading(true);
     try {
       const newUser = await createSupplier(userData);
+
       setData(newUser);
     } catch (error) {
-      setError(error as Error);
+      const x = error as Error;
+      setError(x);
+      throw new Error(x.message);
     } finally {
       setLoading(false);
     }

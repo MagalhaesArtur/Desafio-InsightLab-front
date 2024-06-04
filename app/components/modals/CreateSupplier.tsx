@@ -10,6 +10,7 @@ import { useTheme } from "next-themes";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { useAppContext } from "@/context";
+import InputMask from "react-input-mask";
 
 const CreateSupplier = () => {
   const { theme } = useTheme();
@@ -37,14 +38,21 @@ const CreateSupplier = () => {
     setIsLoading(true);
     const { email, name, document } = values;
 
-    setTimeout(() => {
-      handleCreateSupplier({ email, name, document });
-      setIsLoading(false);
-      toast.success("Fornecedor cadastrado!");
-      reset();
-      refresh();
-      setOnCreateSupplier(!onCreateSupplier);
-      createSupplierModal.onClose();
+    setTimeout(async () => {
+      try {
+        await handleCreateSupplier({ email, name, document });
+        setIsLoading(false);
+        toast.success("Fornecedor cadastrado!");
+        reset();
+        refresh();
+        setOnCreateSupplier(!onCreateSupplier);
+        createSupplierModal.onClose();
+      } catch (e) {
+        console.log(e);
+        const x = e as Error;
+        toast.error(x.message);
+        setIsLoading(false);
+      }
     }, 1000);
   };
 
@@ -61,6 +69,7 @@ const CreateSupplier = () => {
       >
         <Input
           id="name"
+          type="text"
           className={`  ${
             theme == "light"
               ? "bg-indigo-200 placeholder:text-neutral-700 hover:bg-indigo-300 transition-all"
@@ -72,6 +81,7 @@ const CreateSupplier = () => {
           placeholder="Digite o nome do fornecedor..."
         />
         <Input
+          type="email"
           className={`  ${
             theme == "light"
               ? "bg-indigo-200 placeholder:text-neutral-700 hover:bg-indigo-300 transition-all"
@@ -82,14 +92,29 @@ const CreateSupplier = () => {
           {...register("email", { required: true })}
           placeholder="Digite o email do fornecedor..."
         />{" "}
-        <Input
-          className={`  ${
+        <InputMask
+          className={` flex
+          w-full
+          rounded-md
+          border
+          border-transparent
+          px-3
+          py-3
+          text-sm
+          file:border-0
+          file:bg-transparent
+          file:text-sm
+          file:font-medium
+          disabled:cursor-not-allowed
+          disabled:opacity-50
+          focus:outline-none ${
             theme == "light"
               ? "bg-indigo-200 placeholder:text-neutral-700 hover:bg-indigo-300 transition-all"
               : "!bg-indigo-400  placeholder:text-black transition-all hover:bg-indigo-500"
           }`}
           autoComplete="off"
           id="document"
+          mask="99.999.999/9999-99"
           disabled={loading}
           {...register("document", { required: true })}
           placeholder="Digite o CNPJ do fornecedor..."
