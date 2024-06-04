@@ -19,7 +19,7 @@ const CreateSupplier = () => {
   const { setOnCreateSupplier, onCreateSupplier } = useAppContext();
 
   const createSupplierModal = useCreateSupplierModal();
-  const { data, error, loading, handleCreateSupplier } = useCreateSupplier();
+  const { loading, handleCreateSupplier } = useCreateSupplier();
   const onChange = (open: boolean) => {
     if (!open) {
       createSupplierModal.onClose();

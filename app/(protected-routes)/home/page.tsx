@@ -18,7 +18,7 @@ export default function Home() {
   const { theme } = useTheme();
 
   const createSupplierModal = useCreateSupplierModal();
-  const { data, error, loading, setLoading } = useFetchSuppliers();
+  const { data, loading, setLoading } = useFetchSuppliers();
 
   const aux = async () => {
     const supp = await fetchSuppliers();

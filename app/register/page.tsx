@@ -1,6 +1,5 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import useLogin from "@/hooks/useLogin";
 import { useTheme } from "next-themes";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
@@ -19,7 +18,7 @@ const Register: React.FC = () => {
   const { setIsAuthenticated, isAuthenticated } = useAuth();
   const router = useRouter();
   const { theme } = useTheme();
-  const { token, error, loading, handleRegister } = useRegister();
+  const { loading, handleRegister } = useRegister();
   const { register, handleSubmit, reset } = useForm<FieldValues>({
     defaultValues: {
       username: "",

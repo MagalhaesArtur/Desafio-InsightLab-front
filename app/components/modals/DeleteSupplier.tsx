@@ -15,7 +15,7 @@ const DeleteSupplier = () => {
     useAppContext();
   const { theme } = useTheme();
 
-  const { data, error, loading, handleDeleteSupplier } = useDeleteSupplier();
+  const { loading, handleDeleteSupplier } = useDeleteSupplier();
 
   const deleteSupplierModal = useDeleteSupplierModal();
   const onChange = (open: boolean) => {
@@ -23,7 +23,7 @@ const DeleteSupplier = () => {
       deleteSupplierModal.onClose();
     }
   };
-  const { register, handleSubmit, reset } = useForm<FieldValues>({});
+  const { handleSubmit, reset } = useForm<FieldValues>({});
 
   const onSubmit: SubmitHandler<FieldValues> = async (values) => {
     setIsLoading(true);

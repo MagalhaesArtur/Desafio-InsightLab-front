@@ -17,10 +17,10 @@ const Login: React.FC = () => {
   const { setIsAuthenticated, isAuthenticated } = useAuth();
   const router = useRouter();
   const { theme } = useTheme();
-  const { token, error, loading, handleLogin } = useLogin();
+  const { loading, handleLogin } = useLogin();
   const { register, handleSubmit, reset } = useForm<FieldValues>({
     defaultValues: {
-      username: "",
+      email: "",
       password: "",
     },
   });
@@ -32,13 +32,11 @@ const Login: React.FC = () => {
   }, [isAuthenticated, router]);
 
   const onSubmit: SubmitHandler<FieldValues> = async (values) => {
-    console.log("asdasddsadsadas2222");
-
     setIsLoading(true);
 
-    const { username, password } = values;
+    const { email, password } = values;
 
-    const isLoginSucess = await handleLogin(username, password);
+    const isLoginSucess = await handleLogin(email, password);
 
     setTimeout(() => {
       if (isLoginSucess) {
@@ -83,21 +81,7 @@ const Login: React.FC = () => {
                 className="mt-8 space-y-6"
                 onSubmit={handleSubmit(onSubmit)}
               >
-                <div>
-                  <Input
-                    id="username"
-                    className={`transition-all  ${
-                      theme == "light"
-                        ? "bg-indigo-200 placeholder:text-neutral-700 hover:bg-indigo-300 "
-                        : "bg-white text-black  hover:shadow-customDark border-indigo-600"
-                    } ${isError ? "border-red-600" : ""}`}
-                    disabled={loading}
-                    type="text"
-                    autoComplete="off"
-                    {...register("username", { required: true })}
-                    placeholder="Digite o seu username..."
-                  />
-                </div>
+                <div></div>
                 <div>
                   <Input
                     id="email"
@@ -145,6 +129,9 @@ const Login: React.FC = () => {
               <p className="mt-2 text-center text-sm text-gray-600">
                 Novo usuário?{" "}
                 <a
+                  onClick={() => {
+                    router.replace("/register");
+                  }}
                   href="#"
                   className="font-medium text-indigo-600 hover:text-indigo-500"
                 >
