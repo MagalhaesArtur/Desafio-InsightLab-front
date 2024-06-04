@@ -33,7 +33,6 @@ export default function Home() {
       setLoading(false);
     }, 1000);
   }, [data, onCreateSupplier, onDeleteSupplier, onEditSupplier]);
-
   return (
     <div className="  w-full max-h-screen flex flex-col p-2 mt-4 ">
       <div className="flex items-center justify-between">
@@ -58,11 +57,11 @@ export default function Home() {
           Adicionar Fornecedor
         </Button>
       </div>
-      {data1 ? (
+      {loading ? (
+        <BounceLoader className="m-auto" color="#4338ca" />
+      ) : data1 ? (
         !(data1.length > 0) ? (
           <div className="mt-4 text-xl">Sem fornecedores cadastrados!</div>
-        ) : loading ? (
-          <BounceLoader className="m-auto" color="#4338ca" />
         ) : (
           <SuppliersList suppliers={data1} />
         )

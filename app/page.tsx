@@ -132,7 +132,6 @@ const Login: React.FC = () => {
                   onClick={() => {
                     router.replace("/register");
                   }}
-                  href="#"
                   className="font-medium text-indigo-600 hover:text-indigo-500"
                 >
                   Signup

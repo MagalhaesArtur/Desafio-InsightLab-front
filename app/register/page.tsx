@@ -41,7 +41,7 @@ const Register: React.FC = () => {
     const { username, password, email, passwordConfirm } = values;
 
     if (passwordConfirm == password) {
-      const isLoginSucess = await handleRegister(
+      const isRegisterSuccess = await handleRegister(
         username,
         password,
         email,
@@ -49,14 +49,14 @@ const Register: React.FC = () => {
       );
 
       setTimeout(() => {
-        if (isLoginSucess) {
+        if (isRegisterSuccess) {
           setIsLoading(false);
           toast.success("Usuário registrado!");
           router.replace("/");
           reset();
           setIsLoading(false);
         } else {
-          toast.error("Senha ou usuário/email incorretos");
+          toast.error("Email já em uso!");
           setIsLoading(false);
           setIsError(true);
 
@@ -174,12 +174,14 @@ const Register: React.FC = () => {
               </form>
               <p className="mt-2 text-center text-sm text-gray-600">
                 Já tem uma conta?{" "}
-                <a
-                  href="#"
-                  className="font-medium text-indigo-600 hover:text-indigo-500"
+                <button
+                  onClick={() => {
+                    router.replace("/");
+                  }}
+                  className="font-medium underline  border-b-indigo-600 text-indigo-600 hover:text-indigo-500"
                 >
                   Login
-                </a>
+                </button>
               </p>
             </div>
           </div>
