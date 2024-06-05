@@ -116,7 +116,9 @@ const Login: React.FC = () => {
                 <div>
                   <Button
                     type="submit"
-                    className="transition-all hover:shadow-customDark w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500"
+                    className="
+                    outline-0
+                    transition-all hover:shadow-customDark w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2  focus:ring-purple-500"
                   >
                     {loading || isLoading ? (
                       <HashLoader size={25} color="#36d7b7" />

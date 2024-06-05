@@ -35,7 +35,7 @@ export default function Home() {
   }, [data, onCreateSupplier, onDeleteSupplier, onEditSupplier]);
   return (
     <div className="  w-full max-h-screen flex flex-col p-2 mt-4 ">
-      <div className="flex items-center justify-between">
+      <div className="flex w-[90%] min-w-[300px] items-center justify-between">
         <h1
           className={`font-bold text-base pq:text-2xl  ${
             theme == "light" ? "text-indigo-800" : "!text-indigo-500 "

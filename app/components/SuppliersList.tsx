@@ -10,9 +10,9 @@ const SuppliersList = ({ suppliers }: SuppliersListProps) => {
   const { theme } = useTheme();
 
   return (
-    <div className=" w-full min-w-[100px]  ">
+    <div className=" w-[90%] min-w-[300px]  ">
       <table
-        className={` w-full min-w-[100px] 
+        className={` w-full min-w-[300px] 
      
       max-h-full overflow-y-scroll  mt-10 shadow-custom !rounded-lg ${
         theme == "light" ? "shadow-custom" : "shadow-customDark"
